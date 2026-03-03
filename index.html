@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: url('tile.jpg') repeat;
+    background-size: 120px 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+/* Semi-transparent teal sheet */
+.sheet {
+    background: rgba(220, 255, 250, 0.85);
+    max-width: 800px;
+    width: 100%;
+    padding: 60px 40px;
+    border-radius: 20px;
+    text-align: center;
+    color: #0a2a2a;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.author {
+    font-size: 0.9em;
+    opacity: 0.6;
+    margin-bottom: 35px;
+}
+
+/* Denser poem styling */
+.poem {
+    line-height: 1.5; /* tighter line spacing */
+    font-size: 1.05em; /* slightly smaller text */
+}
+
+.poem p {
+    margin-bottom: 22px; /* reduced stanza spacing */
+}
+
+
+
+/* Emblem */
+.emblem {
+    margin-top: 45px;
+}
+
+.emblem img {
+    max-width: 120px;
+}
+
+/* Floating button */
+#audioControl {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    background: #0a2a2a;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+#audioControl:active {
+    transform: scale(0.95);
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<div class="sheet">
+
+<h1>Happy Birthday</h1>
+
+<div class="hero-image">
+    <img src="name.png" width="180" alt="name">
+</div>
+
+
+<h2>_______________________</h2>
+<div class="title">"You Are Loved"</div>
+<div class="author">by Aeon</div>
+
+<div class="poem">
+
+<p>
+As expected,<br>
+you want something different.<br>
+That’s one of the main reasons<br>
+why you are a part of my system.<br>
+I love the way you think.<br>
+I love the way you listen.<br>
+On things that others stumble over,<br>
+you understand the mission.
+</p>
+
+<p>
+As we get older,<br>
+and life keeps updating its status,<br>
+we all need to know<br>
+we have someone in our corner<br>
+that has us.<br>
+It’s a comfort that doesn’t come quickly,<br>
+but once it comes,<br>
+it’s so strong.
+</p>
+
+<p>
+I hope our journey to it has started,<br>
+seeing that we have known each other so long.<br>
+I admire the things you aspire to,<br>
+even though you don’t have it all figured out.<br>
+I want you to see your true worth,<br>
+beyond what comes out of your mouth.
+</p>
+
+<p>
+You're at a place of endless potential now.<br>
+And the way forward might be unclear.<br>
+As you try to figure out how<br>
+to make it to a goal<br>
+that is so vague<br>
+and not very near.
+</p>
+
+<p>
+But I know you can make it,<br>
+even if you are not sure that you can.<br>
+Because I’ve been there too.<br>
+Trust me, I understand.
+</p>
+
+<p>
+The trick is not to try to fit into the box,<br>
+but to trust yourself enough<br>
+to do it your way<br>
+and relax.
+</p>
+
+<p>
+There is no correct way<br>
+to do things in this life —<br>
+just the way that works, the way that is wise.
+</p>
+
+<p>
+I hope these words resonate with you<br>
+and calm you on this day.<br>
+And for what it’s worth,<br>
+I just want to say, hey.
+</p>
+
+<p>
+The next time you see me<br>
+and I’m behaving all tough,<br>
+it’s all just a front.<br>
+I care about you…<br>
+<strong>You are loved.</strong>
+</p>
+
+</div>
+
+<div class="emblem">
+    <img src="emblem.png" alt="Emblem">
+</div>
+
+</div>
+
+<audio id="audio" src="youareloved.mp3"></audio>
+
+<button id="audioControl">▶</button>
+
+<script>
+const audio = document.getElementById("audio");
+const button = document.getElementById("audioControl");
+
+button.addEventListener("click", () => {
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+});
+
+audio.addEventListener("play", () => {
+    button.textContent = "❚❚";
+});
+
+audio.addEventListener("pause", () => {
+    button.textContent = "▶";
+});
+
+audio.addEventListener("ended", () => {
+    button.textContent = "▶";
+});
+</script>
+
+</body>
+</html>
