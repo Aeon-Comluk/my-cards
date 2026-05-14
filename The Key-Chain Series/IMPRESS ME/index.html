@@ -1,0 +1,428 @@
+<!-- ========================= -->
+<!-- FILE: index.html         -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>The Key-Chain Series</title>
+
+<!-- FONT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg-top:#f5f4f2;
+  --bg-bottom:#ece9e4;
+
+  --paper:#e8e3dc;
+
+  --ink:#2d2b2a;
+  --soft-ink:#706c68;
+
+  --shadow:0 10px 28px rgba(0,0,0,0.08);
+
+  --radius:26px;
+
+  --play-size:110px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+
+  font-family:'Cormorant Garamond', serif;
+  color:var(--ink);
+
+  background:
+    linear-gradient(
+      to bottom,
+      var(--bg-top),
+      var(--bg-bottom)
+    );
+}
+
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+/* MAIN MOBILE ARTIFACT */
+.viewer{
+  position:relative;
+
+  width:min(92vw, 430px);
+  height:min(95vh, 920px);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* TITLE AREA */
+.header{
+  text-align:center;
+  margin-top:10px;
+}
+
+.title{
+  font-size:3rem;
+  line-height:0.95;
+  font-weight:600;
+  margin:0;
+}
+
+.series{
+  font-size:1.2rem;
+  margin-top:4px;
+  color:var(--ink);
+}
+
+/* PAPER AREA */
+.paper-wrap{
+  position:relative;
+
+  width:100%;
+  flex:1;
+
+  margin-top:22px;
+  margin-bottom:28px;
+}
+
+.paper{
+  width:100%;
+  height:100%;
+
+  background:var(--paper);
+
+  border-radius:2px;
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+
+  position:relative;
+}
+
+/* POEM SCROLL AREA */
+.poem-scroll{
+  position:absolute;
+  inset:0;
+
+  overflow-y:auto;
+
+  padding:
+    42px
+    34px
+    120px
+    34px;
+
+  scrollbar-width:none;
+}
+
+.poem-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+/* STANZAS */
+.stanza{
+  margin:0 0 32px 0;
+
+  font-size:1.55rem;
+  line-height:1.45;
+
+  color:var(--ink);
+
+  white-space:pre-line;
+}
+
+/* SYMBOL IMAGE */
+.symbol{
+  position:absolute;
+
+  width:220px;
+
+  right:-12px;
+  bottom:40px;
+
+  opacity:0.5;
+  pointer-events:none;
+}
+
+/* PLAY BUTTON */
+.play-btn{
+  position:absolute;
+
+  right:-18px;
+  bottom:20px;
+
+  width:var(--play-size);
+  height:var(--play-size);
+
+  border:none;
+  border-radius:50%;
+
+  background:#6f6b69;
+
+  color:#f4f0eb;
+
+  font-size:2.8rem;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 10px 22px rgba(0,0,0,0.15);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.play-btn:active{
+  transform:scale(0.95);
+}
+
+.play-btn.playing{
+  background:#595553;
+}
+
+/* AMAZON BUTTON */
+.book-link{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  min-height:76px;
+
+  width:78%;
+
+  border-radius:999px;
+
+  border:6px solid #7a7673;
+
+  background:transparent;
+
+  color:var(--ink);
+
+  text-decoration:none;
+
+  font-size:1.2rem;
+  font-weight:500;
+
+  margin-bottom:10px;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.book-link:active{
+  transform:scale(0.98);
+}
+
+@media (max-height:760px){
+
+  .title{
+    font-size:2.4rem;
+  }
+
+  .stanza{
+    font-size:1.3rem;
+  }
+
+  .play-btn{
+    width:92px;
+    height:92px;
+    font-size:2.2rem;
+  }
+
+  .symbol{
+    width:180px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="viewer">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1 class="title" id="title"></h1>
+    <div class="series" id="series"></div>
+  </div>
+
+  <!-- PAPER -->
+  <div class="paper-wrap">
+
+    <div class="paper">
+
+      <div class="poem-scroll" id="poem"></div>
+
+      <img
+        class="symbol"
+        id="symbol"
+        src=""
+        alt="Poem Symbol"
+      />
+
+    </div>
+
+    <!-- FLOATING PLAY BUTTON -->
+    <button
+      class="play-btn"
+      id="playBtn"
+      aria-label="Play Poem"
+    >
+      ▶
+    </button>
+
+  </div>
+
+  <!-- AMAZON -->
+  <a
+    class="book-link"
+    id="bookLink"
+    href="#"
+    target="_blank"
+  >
+    Explore the Collection
+  </a>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="poemAudio"></audio>
+<audio id="ambientAudio" loop></audio>
+
+<!-- POEM DATA -->
+<script src="poem.js"></script>
+
+<script>
+/* ===========================
+   LOAD CONTENT
+=========================== */
+
+document.getElementById("title").textContent =
+  POEM.title;
+
+document.getElementById("series").textContent =
+  POEM.series;
+
+document.getElementById("symbol").src =
+  POEM.symbol;
+
+document.getElementById("bookLink").href =
+  POEM.amazon;
+
+/* ===========================
+   LOAD STANZAS
+=========================== */
+
+const poemContainer =
+  document.getElementById("poem");
+
+POEM.text.forEach(stanza => {
+
+  const p =
+    document.createElement("p");
+
+  p.className = "stanza";
+
+  p.textContent = stanza;
+
+  poemContainer.appendChild(p);
+
+});
+
+/* ===========================
+   AUDIO
+=========================== */
+
+const poemAudio =
+  document.getElementById("poemAudio");
+
+const ambientAudio =
+  document.getElementById("ambientAudio");
+
+poemAudio.src = POEM.audio;
+ambientAudio.src = POEM.ambient;
+
+ambientAudio.volume = 0.18;
+
+/* ===========================
+   PLAY BUTTON
+=========================== */
+
+const playBtn =
+  document.getElementById("playBtn");
+
+let ambientStarted = false;
+
+playBtn.addEventListener("click", async () => {
+
+  /* START AMBIENT ONLY ONCE */
+  if(!ambientStarted){
+
+    try{
+      await ambientAudio.play();
+      ambientStarted = true;
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  /* TOGGLE POEM AUDIO */
+  if(poemAudio.paused){
+
+    try{
+      await poemAudio.play();
+
+      playBtn.innerHTML = "❚❚";
+      playBtn.classList.add("playing");
+
+    }catch(err){
+      console.log(err);
+    }
+
+  }else{
+
+    poemAudio.pause();
+
+    playBtn.innerHTML = "▶";
+    playBtn.classList.remove("playing");
+  }
+
+});
+
+/* ===========================
+   RESET WHEN FINISHED
+=========================== */
+
+poemAudio.addEventListener("ended", () => {
+
+  playBtn.innerHTML = "▶";
+  playBtn.classList.remove("playing");
+
+});
+</script>
+
+</body>
+</html>
